@@ -116,7 +116,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(10,10,10,0.3), rgba(10,10,10,0.4));
+            background: linear-gradient(rgba(10,10,10,0.4), rgba(10,10,10,0.5));
         }
         .slide.active {
             opacity: 1;
@@ -128,8 +128,9 @@
             padding: 0 20px;
         }
 
+        /* 👇 这里我已经帮你改成自适应字体，所有电脑显示一致 */
         .hero h1 {
-            font-size: 36px;
+            font-size: clamp(32px, 6vw, 65px);
             font-weight: 800;
             text-transform: none;
             letter-spacing: 1px;
@@ -139,9 +140,9 @@
             color: #FF7D00;
         }
         .hero p {
-            font-size: 16px;
+            font-size: clamp(15px, 2vw, 18px);
             color: #b8b8b8;
-            max-width: 100%;
+            max-width: 800px;
             margin: 0 auto 30px;
         }
         .cta-btn {
@@ -154,6 +155,7 @@
             text-decoration: none;
             border-radius: 2px;
             transition: 0.3s;
+            font-size: clamp(14px, 1.5vw, 16px);
         }
         .cta-btn:hover {
             background: #e67000;
@@ -164,7 +166,7 @@
             margin-bottom: 40px;
         }
         .section-title h2 {
-            font-size: 28px;
+            font-size: clamp(24px, 4vw, 36px);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -264,7 +266,7 @@
             z-index: 2;
         }
         .factory h2 {
-            font-size: 28px;
+            font-size: clamp(24px, 4vw, 32px);
             text-transform: uppercase;
             margin-bottom: 20px;
         }
@@ -392,16 +394,6 @@
             .slide {
                 top: 60px;
                 height: calc(100% - 60px);
-            }
-            .hero h1 {
-                font-size: 52px;
-            }
-            .hero p {
-                font-size: 18px;
-                max-width: 700px;
-            }
-            .section-title h2 {
-                font-size: 36px;
             }
             .series-grid {
                 grid-template-columns: repeat(3, 1fr);
