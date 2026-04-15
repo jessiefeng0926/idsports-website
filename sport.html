@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPORT SERIES | IDSPORTS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.cn/css2?family=Inter:wght@400;500;600;700,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -95,7 +95,6 @@
             margin-bottom: 10px;
         }
 
-        /* 核心容器宽度放大至1400px */
         .combo-section {
             padding: 40px 20px;
             background: #0A0A0A;
@@ -228,51 +227,159 @@
             left: 0;
         }
 
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
+        /* 数据库筛选样式（和 product.html 完全一样） */
+        .filter-container {
+            background: #0F0F0F;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 48px;
+            border: 1px solid rgba(255,125,0,0.2);
         }
-        .product-card {
-            background: #fff;
-            border-radius: 6px;
-            overflow: hidden;
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+        .filter-item {
+            flex: 1;
+            min-width: 170px;
             position: relative;
         }
-        .product-badge {
+        .filter-item select {
+            width: 100%;
+            padding: 14px 18px;
+            background: #1A1A1A;
+            border: 1px solid #2C2C2C;
+            color: white;
+            border-radius: 40px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.2s ease;
+        }
+        .filter-item select:focus {
+            outline: none;
+            border-color: #FF7D00;
+        }
+        .filter-item i {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ff3b30;
-            color: #fff;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 2px;
-            text-transform: uppercase;
-            z-index: 1;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #FF7D00;
+            pointer-events: none;
+        }
+        .search-btn {
+            padding: 14px 32px;
+            background: #FF7D00;
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .search-btn:hover {
+            background: #e66f00;
+            transform: scale(0.97);
+        }
+
+        /* 产品卡片（和 product.html 完全统一） */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 28px;
+        }
+        .product-card {
+            background: #111;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            height: 100%;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #FF7D00;
+            box-shadow: 0 8px 24px rgba(255,125,0,0.1);
+        }
+        .product-img-container {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .product-img {
             width: 100%;
-            object-fit: contain;
-            background: #fff;
-            display: block;
+            height: 100%;
+            object-fit: cover;
+        }
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #FF7D00;
+            color: #000;
+            font-weight: 800;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 30px;
         }
         .product-info {
-            padding: 6px 12px 12px;
-            background: #fff;
+            padding: 20px;
+            height: calc(100% - 225px);
+            display: flex;
+            flex-direction: column;
         }
         .product-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #fff;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .product-desc {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        .product-part {
+            font-family: monospace;
+            background: #1e1e1e;
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 11px;
-            line-height: 1.3;
-            color: #333;
-            text-align: left;
+            color: #FF9A44;
+            align-self: flex-start;
+        }
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: #111;
+            border-radius: 28px;
+            color: #aaa;
+            font-size: 16px;
+            grid-column: 1 / -1;
+        }
+        .no-results i {
+            color: #FF7D00;
+            margin-bottom: 12px;
+            font-size: 24px;
         }
 
+        /* 按钮独立成行，不堆叠 */
         .button-container {
+            width: 100%;
             text-align: right;
-            margin-bottom: 30px;
+            margin: 40px 0;
         }
         .custom-btn {
             display: inline-block;
@@ -289,7 +396,6 @@
             color: #000;
         }
 
-        /* 底部大图突破容器宽度限制，实现全宽 */
         .bottom-banner {
             width: 100vw;
             position: relative;
@@ -368,26 +474,18 @@
         }
         .social-icons a:hover { color: #FF7D00; }
 
-        /* 大屏幕优化：超过1800px时产品网格显示更多列 */
-        @media (min-width: 1800px) {
-            .product-grid {
-                grid-template-columns: repeat(6, 1fr);
-            }
-            .product-title {
-                font-size: 12px;
-            }
-            .page-hero {
-                min-height: 60vh;
-            }
-        }
-
         @media (max-width:768px) {
             .feature-grid, .feature-row { grid-template-columns: 1fr; }
-            .top-images { grid-column: 1; }
-            .top-text { grid-column: 1; }
-            .top-images { flex-direction: column; }
+            .top-images { grid-column: 1; flex-direction: column; }
             .top-images .feature-img { width: 100%; }
-            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .top-text { grid-column: 1; }
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-btn {
+                width: 100%;
+            }
             .footer {
                 flex-direction: column;
                 align-items: center;
@@ -396,11 +494,6 @@
             }
             .footer-left, .footer-right, .footer-center { width: 100%; text-align: center; }
             .combo-bg { display: none; }
-            .bottom-banner {
-                left: 0;
-                margin-left: 0;
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -410,7 +503,7 @@
     <img src="logo.png" alt="IDSPORTS Logo" class="logo" loading="lazy">
     <ul class="nav-menu">
         <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#products">Products</a></li>
+        <li><a href="product.html">Products</a></li>
         <li><a href="index.html#technology">Technology</a></li>
         <li><a href="index.html#factory">Factory</a></li>
         <li><a href="index.html#contact">Contact</a></li>
@@ -496,585 +589,35 @@
         </div>
     </div>
 
-    <div class="product-grid">
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Alfa Romeo Giulia RWD 17-23</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Alfa Romeo, Stelvio, RWD(GU) 2018-20</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BMW 3 Series E36, 318I/323I/325I/328I/M3 1992-1999(seperate type),E36M3</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BMW 3 Series E46 98-05(seperate type),E46(M3),Convertible</p>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BMW E90 E91 E92 E93 07-13</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BMW F20/F22/F23, F30/F32/F34/F35  RWD 14-18</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BMW M2 14 UP F22/F87 NOT FOR AWD  OR Electronic Suspesion</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BMW F10 F18 G30,G38 RWD</p>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BMW F80 M3 F82 M4 F87 M2 3 BOLTS</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BMW F80 M3 F82 M4 F87 M2 5 BOLTS</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BMW 5-Series Sedan RWD (G30) G38 17-22</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BYD Seal 2022+</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Chery Tiggo 8</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Chrysler 300C 11-21 RWD</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Chrysler 300C RWD 2005-10   Dodge Challenger 2008-10 Dodge Charger RWD 2006-10</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Ford Focus 03-up,C-Max 2WD 03-up,II 2WD 04-up 06-17，ST 13-18, 52MM</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Ford Mustang 05-14,Shelby, S197</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Ford Fiesta 08-18</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mustang  94-04 All, Excluding 99-04 Cobra,GT SN95</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mustang 79-93</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | LINK&CO 03，03+, BYD F3</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | GM Cadillac  ATS 13-19, CTS 14-19, CT4 20-21</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Honda Civic 92-95 96-00 EK EG, Acura Integra 94-01 (Rear Fork),GEN V.VI</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Honda ED EF 88-91 Civic, CRX 88-92, DA Integra(90-93) GEN IV</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Honda S2000 AP1 AP2 2000-2009</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Honda Accord 2002-2007(7th) Accord Euro R CL7/ CL9/ 04-08 Acura TSX/ Acura TL</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS |Honda Acura Integra RSX 2002-2006 Honda DC5, 02-05 civic si,GEN VII</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Honda Fit/Jazz GD3/GE8/GK5</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Honda Accord gen 10th 18+</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Hyundai Genesis 11-15</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Hyundai I30 Fd 08-12 fork type,Kia Ceed Ed 08-12，</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Jaguar 2016-2021 XF W/O Air X260</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Kia Ceed Ed 08-12，I30 Fd 08-12 fork type</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Lexus IS200 IS300 97-05 Altezza RS200</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Lexus IS250/GS250(05-13, GSE20),IS350/GS350(05-13,GSE21),GS430(05-11,UZS190,UZRS190),GS460(07-11 URS190)</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Lexus GS350, 400，430，450 13-up</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Lexus LS430 00-06 UCF 30/31 UCF40</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mazda RX-7 FC3S 1986-1991 GEN II</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mazda RX7 1991-2002 FD3S</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mazda Miata MX5 NA NB 90-98</p>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mazda Axela 2013+ BM/BN（2013-2019）,CX-5(13-16, AWD/FWD),Volver sv40, v40</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mazda RX-8, 2004-2011</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mazda Miata MX5 06-15 NC</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | BenzC63 08-15,W204, C180,C200,C250 C300 C350 RWD 08-14 RWD not fit Self-Leveling control or Airmatic</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Benz W177 W247 W118 180,200/220,A35,A45 19-2021 </p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Benz W176 C117 W117 A180,A200,A250, A35 A45 12-18</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mini Cooper  R55 R56 R57 R58 R59</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mini Cooper  F55 F56 F57 14-24</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mitsubishi Lancer 02-06 Lancer 7/8/9</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mitsubishi Lancer Evolution EVO VIII IX EVO8 EVO9 03-07</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mitsubishi Lancer EVO1/2/3 1994-1995</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mitsubishi Lancer EVO4/5/6 96-01</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Mitsubishi Galant VR4 EC5A</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Nissan 240sx S13 89-94/   A31,A32,A33.   Nissan laurel c33/c34</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Nissan 240sx S14 95-98 R32,R33, RWD, Nissan laurel E-GC35 chassis,S15:99-02</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Nissan Skyline R32 BNR32  HR32 GT-S GT-ST RB20DET 89-94</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Nissan Skyline GT-S/GT-ST R33 (HR33/ER33/ECR33) 94-98</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Nissan 300ZX Z32 90-96 Skyline R32 GTR</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Nissan Gtr r35</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Infiniti Q50 AWD 44mm W/O DDS 14-20</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Infinity Q70( 14-UP ) AWD, Y51, </p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Opel Astra </p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS |Peugeot 206(98-12), 207(06-14), Naza 206 Bestari (Malaysia, 06–11),• Citroën C2 (China, 06–13)</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Scion TC 11-16 AGT20</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Scion FRS FR-S FT86 GT86 / Subaru BRZ 2012+</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Subaru Legacy 09-13 BM9/BR9</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Subaru Impreza WRX STi 08-14</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS |Swift 04-15,ZC11S ZC21S ZD21S ZC71S ZC31S ZC32S ,ZC33 ZC72 ZC72S  82</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Toyota Supra MA70 GA70 JZA70 87-92</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Toyota Altezza GITA GXE10W, Crown GRS202,Athlete ARS210/214/AWS210/GRS210/204/200/184/182/180/,Majesta GWS214, REIZ GRX133/130/121/120 </p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Toyota Matrix 03-18</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Toyota supra 93-02, Lexus SC300 SC400 92-00, JZA80</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Toyota Vios/Yaris  NCP150 2013+</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Toyota Corolla 03-18  (china) ZRE151</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Toyota MR-2 Spyder 00-06</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Tesla Model 3 AWD  17-21</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Tesla Model Y AWD</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Volkwagen Golf MK5 MK6, 2011-2014 with 54mm front lower bracket,Passat B7/B8,R36</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Volkwagen Golf (MK7 / TYP 5G) FWD with 50mm front lower bracket 2015-2021</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | VW Golf MK7 (54mm),B8,Audi S3,CC, GolfR, Gti MK7(15-20). </p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Audi TTRS/RS3/ S3/ 15-19 MQB Platform  Quattro A3  Quattro，</p>
-            </div>
-        </div>
- <div class="product-card">
-            <div class="product-badge">Sale</div>
-            <img src="0202.png" class="product-img">
-            <div class="product-info">
-                <p class="product-title">SPORT COILOVERS | Xiaopeng  P7</p>
-            </div>
+    <!-- 筛选栏（和 product.html 完全一样） -->
+    <div class="filter-container">
+        <div class="filter-row">
+            <div class="filter-item">
+                <select id="makeSelect">
+                    <option value="">Select Brand</option>
+                </select>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter-item">
+                <select id="modelSelect">
+                    <option value="">Select Model</option>
+                </select>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter-item">
+                <select id="yearSelect">
+                    <option value="">Select Year</option>
+                </select>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <button class="search-btn" id="searchBtn">SEARCH</button>
         </div>
     </div>
 
+    <!-- 产品卡片列表（数据库布局） -->
+    <div class="product-grid" id="productList"></div>
+
+    <!-- 按钮独立成行 -->
     <div class="button-container">
         <a href="#" class="custom-btn">----- please contact for more applications</a>
     </div>
@@ -1114,10 +657,210 @@
 </footer>
 
 <script>
-    window.addEventListener('scroll', function() {
-        const nav = document.getElementById('mainNavbar');
-        nav.classList.toggle('shrink', window.scrollY > 50);
+// 导航收缩
+window.addEventListener('scroll', function() {
+    const nav = document.getElementById('mainNavbar');
+    nav.classList.toggle('shrink', window.scrollY > 50);
+});
+
+// 车型数据库
+const rawData = [
+{ brand:"ALFA ROMEO", part:"SD148", app:"Alfa Romeo Giulia RWD 17-23" },
+{ brand:"ALFA ROMEO", part:"SD203", app:"Alfa Romeo Stelvio RWD(GU) 18-20" },
+{ brand:"BMW", part:"SD036", app:"BMW 3 Series E36 318I 323I 325I 328I M3 92-99" },
+{ brand:"BMW", part:"SD067", app:"BMW 3 Series E46 M3 Convertible 98-05" },
+{ brand:"BMW", part:"SD090", app:"BMW E90 E91 E92 E93 07-13" },
+{ brand:"BMW", part:"SD094", app:"BMW F20 F22 F23 F30 F32 F34 F35 RWD 14-18" },
+{ brand:"BMW", part:"SD152", app:"BMW M2  F22 F87 14-up " },
+{ brand:"BMW", part:"SD157", app:"BMW F10 F18 G30 G38 RWD" },
+{ brand:"BMW", part:"SD239", app:"BMW F80 M3 F82 M4 F87 M2 3 BOLTS" },
+{ brand:"BMW", part:"SD240", app:"BMW F80 M3 F82 M4 F87 M2 5 BOLTS" },
+{ brand:"BMW", part:"SD271", app:"BMW 5 Series Sedan RWD (G30) G38 17-22" },
+{ brand:"BYD", part:"SD501", app:"BYD Seal 22+" },
+{ brand:"CHERY", part:"SD285", app:"Chery Tiggo 8" },
+{ brand:"CHRYSLER", part:"SD183", app:"Chrysler 300C 11-21 RWD" },
+{ brand:"CHRYSLER", part:"SD197", app:"Chrysler 300C RWD 05-10,Dodge Challenger 08-10,Dodge Charger RWD 06-10" },
+{ brand:"FORD", part:"SD046", app:"Ford Focus 03-up,C-Max 2WD 03-up,II 2WD 04-up 06-17,ST 13-18, 52MM" },
+{ brand:"FORD", part:"SD160", app:"Ford Mustang 05-14,Shelby,S197" },
+{ brand:"FORD", part:"SD163", app:"Ford Fiesta 08-18" },
+{ brand:"FORD", part:"SD186", app:"Ford ustang  94-04 All, Excluding 99-04 Cobra,GT SN95" },
+{ brand:"FORD", part:"SD294", app:"Ford Mustang 79-93" },
+{ brand:"GEELY", part:"SD175", app:"LINK&CO 03，03+, BYD F3" },
+{ brand:"GM", part:"SD126", app:"Cadillac ATS 13-19, CTS 14-19, CT4 20-21" },
+{ brand:"HONDA", part:"SD006", app:"Honda Civic 92-95 96-00 EK EG, Acura Integra 94-01 (Rear Fork),GEN V.VI" },
+{ brand:"HONDA", part:"SD007", app:"Honda ED EF 88-91 Civic, CRX 88-92, DA Integra(90-93) GEN IV" },
+{ brand:"HONDA", part:"SD020", app:"Honda S2000 AP1 AP2 00-09" },
+{ brand:"HONDA", part:"SD033", app:"Honda Accord 02-07(7th) Accord Euro R CL7/CL9/ 04-08 Acura TSX/ Acura TL" },
+{ brand:"HONDA", part:"SD053", app:"Honda Acura Integra RSX 02-06 Honda DC5, 02-05 civic si,GEN VII" },
+{ brand:"HONDA", part:"SD110", app:"Honda Fit/Jazz GD3 GE8 GK5" },
+{ brand:"HONDA", part:"SD194", app:"Honda Accord gen 10th 18+" },
+{ brand:"HYUNDAI", part:"SD035", app:"Hyundai Genesis 11-15" },
+{ brand:"HYUNDAI", part:"SD171", app:"Hyundai I30 Fd 08-12 fork type,Kia Ceed Ed 08-12" },
+{ brand:"JAGUAR", part:"SD222", app:"Jaguar 16-21 XF W/O Air X260" },
+{ brand:"KIA", part:"SD171", app:"Kia Ceed Ed 08-12，I30 Fd 08-12 fork type" },
+{ brand:"LEXUS", part:"SD047", app:"Lexus IS200 IS300 97-05 Altezza RS200" },
+{ brand:"LEXUS", part:"SD069", app:"Lexus IS250/GS250(05-13, GSE20),IS350/GS350(05-13,GSE21),GS430(05-11,UZS190,UZRS190),GS460(07-11 URS190)" },
+{ brand:"LEXUS", part:"SD142", app:"Lexus GS350, 400，430，450 13-up" },
+{ brand:"LEXUS", part:"SD170", app:"Lexus LS430 00-06 UCF 30/31 UCF40" },
+{ brand:"MAZDA", part:"SD018", app:"Mazda RX-7 FC3S 86-91 GEN II" },
+{ brand:"MAZDA", part:"SD021", app:"Mazda RX7 91-02 FD3S" },
+{ brand:"MAZDA", part:"SD023", app:"Mazda Miata MX5 NA NB 90-98" },
+{ brand:"MAZDA", part:"SD127", app:"Mazda Axela 13+ BM/BN (13-19）,CX-5(13-16, AWD/FWD),Volver sv40, v40" },
+{ brand:"MAZDA", part:"SD150", app:"Mazda RX-8, 04-11" },
+{ brand:"MAZDA", part:"SD205", app:"Mazda Miata MX5 06-15 NC" },
+{ brand:"MERCEDES", part:"SD118", app:"BenzC63 08-15,W204, C180,C200,C250 C300 C350 RWD 08-14 RWD not fit Self-Leveling control or Airmatic" },
+{ brand:"MERCEDES", part:"SD213", app:"Benz W177 W247 W118 180,200/220,A35,A45 19-21 " },
+{ brand:"MERCEDES", part:"SD244", app:"Benz W176 C117 W117 A180,A200,A250, A35 A45 12-18" },
+{ brand:"MINI", part:"SD050", app:"Mini Cooper  R55 R56 R57 R58 R59" },
+{ brand:"MINI", part:"SD214", app:"Mini Cooper  F55 F56 F57 14-24" },
+{ brand:"MITSUBISHI", part:"SD003", app:"Mitsubishi Lancer 02-06 Lancer 7/8/9" },
+{ brand:"MITSUBISHI", part:"SD028", app:"Mitsubishi Lancer Evolution EVO VIII IX EVO8 EVO9 03-07" },
+{ brand:"MITSUBISHI", part:"SD037", app:"Mitsubishi Lancer EVO1/2/3 94-95" },
+{ brand:"MITSUBISHI", part:"SD038", app:"Mitsubishi Lancer EVO4/5/6 96-01" },
+{ brand:"MITSUBISHI", part:"SD137", app:"Mitsubishi Galant VR4 EC5A" },
+{ brand:"NISSAN", part:"SD013", app:"Nissan 240sx S13 89-94/  A31,A32,A33.   Nissan laurel c33/c34" },
+{ brand:"NISSAN", part:"SD015", app:"Nissan 240sx S14 95-98 R32,R33, RWD, Nissan laurel E-GC35 chassis,S15:99-02" },
+{ brand:"NISSAN", part:"SD016", app:"Nissan Skyline R32 BNR32  HR32 GT-S GT-ST RB20DET 89-94" },
+{ brand:"NISSAN", part:"SD017", app:"Nissan Skyline GT-S/GT-ST R33 (HR33/ER33/ECR33) 94-98" },
+{ brand:"NISSAN", part:"SD030", app:"Nissan 300ZX Z32 90-96 Skyline R32 GTR" },
+{ brand:"NISSAN", part:"SD128", app:"Nissan GTR R35" },
+{ brand:"NISSAN", part:"SD190", app:"Infiniti Q50 AWD 44mm W/O DDS 14-20" },
+{ brand:"NISSAN", part:"SD211", app:"Infinity Q70( 14-UP ) AWD, Y51" },
+{ brand:"OPEL", part:"SD284", app:"Opel Astra" },
+{ brand:"PEUGEOT", part:"SD250", app:"Peugeot 206(98-12), 207(06-14), Naza 206 Bestari (Malaysia, 06–11),• Citroën C2 (China, 06–13)" },
+{ brand:"SCION", part:"SD168", app:"Scion TC 11-16 AGT20" },
+{ brand:"SCION", part:"SD061", app:"Scion FRS FR-S FT86 GT86 / Subaru BRZ 12+" },
+{ brand:"SUBARU", part:"SD099", app:"Subaru Legacy 09-13 BM9/BR9" },
+{ brand:"SUBARU", part:"SD119", app:"Subaru Impreza WRX STi 08-14" },
+{ brand:"SUZUKI", part:"SD031", app:"Swift 04-15,ZC11S ZC21S ZD21S ZC71S ZC31S ZC32S ,ZC33 ZC72 ZC72S  82" },
+{ brand:"TOYOTA", part:"SD019", app:"Toyota Supra MA70 GA70 JZA70 87-92" },
+{ brand:"TOYOTA", part:"SD069", app:"Toyota Altezza GITA GXE10W, Crown GRS202, Athlete ARS210/214/AWS210/GRS210/204/200/184/182/180/,Majesta GWS214, REIZ GRX133/130/121/120" },
+{ brand:"TOYOTA", part:"SD085", app:"Toyota Matrix 03-18" },
+{ brand:"TOYOTA", part:"SD108", app:"Toyota supra 93-02, Lexus SC300 SC400 92-00, JZA80" },
+{ brand:"TOYOTA", part:"SD156", app:"Toyota Vios/Yaris  NCP150 13+" },
+{ brand:"TOYOTA", part:"SD161", app:"Toyota Corolla 03-18  (china) ZRE151" },
+{ brand:"TOYOTA", part:"SD167", app:"Toyota MR-2 Spyder 00-06" },
+{ brand:"TESLA", part:"SD177", app:"Tesla Model 3 AWD  17-21" },
+{ brand:"TESLA", part:"SD201", app:"Tesla Model Y AWD" },
+{ brand:"VW", part:"SD113", app:"Volkwagen Golf MK5 MK6 11-14 with 54mm front lower bracket,Passat B7/B8,R36" },
+{ brand:"VW", part:"SD115", app:"Volkwagen Golf (MK7 / TYP 5G) FWD with 50mm front lower bracket 15-21 " },
+{ brand:"VW", part:"SD130", app:"VW Golf MK7 (54mm),B8,Audi S3,CC, GolfR, Gti MK7(15-20)" },
+{ brand:"AUDI", part:"SD154", app:"Audi TTRS/RS3/ S3/ 15-19 MQB Platform  Quattro A3  Quattro，" },
+{ brand:"XIAOPENG", part:"SD289", app:"Xiaopeng P7" }
+];
+
+// 工具函数
+function extractYearRange(desc) {
+    const yearMatch = desc.match(/(\d{2,4})\s*[-–]\s*(\d{2,4})/);
+    if (yearMatch) return `${yearMatch[1]}-${yearMatch[2]}`;
+    const singleYear = desc.match(/(19|20)\d{2}/);
+    if (singleYear) return singleYear[0];
+    if (desc.includes("20+") || desc.includes("up") || desc.includes("+")) return "2020+";
+    if (desc.includes("19+")) return "2019+";
+    return "—";
+}
+
+const productsData = rawData.map(item => {
+    let shortModel = item.app
+        .replace(new RegExp(item.brand, 'gi'), '')
+        .split(/[,\d\(]/)[0]
+        .trim();
+    if (shortModel.length > 38) shortModel = shortModel.substring(0, 35);
+    shortModel = shortModel || item.brand;
+    return {
+        make: item.brand,
+        model: shortModel,
+        year: extractYearRange(item.app),
+        part: item.part,
+        application: item.app
+    };
+});
+
+const uniqueProducts = [];
+const keySet = new Set();
+for (let p of productsData) {
+    const uid = `${p.make}|${p.model}|${p.part}`;
+    if (!keySet.has(uid)) {
+        keySet.add(uid);
+        uniqueProducts.push(p);
+    }
+}
+const finalData = uniqueProducts;
+
+const makeSel = document.getElementById("makeSelect");
+const modelSel = document.getElementById("modelSelect");
+const yearSel = document.getElementById("yearSelect");
+const searchBtn = document.getElementById("searchBtn");
+const productGrid = document.getElementById("productList");
+
+function populateMakes() {
+    const makes = [...new Set(finalData.map(p => p.make))].sort();
+    makes.forEach(make => {
+        makeSel.appendChild(new Option(make, make));
     });
+}
+
+function populateModels() {
+    modelSel.innerHTML = '<option value="">Select Model</option>';
+    yearSel.innerHTML = '<option value="">Select Year</option>';
+    const selectedMake = makeSel.value;
+    if (!selectedMake) return;
+    const models = [...new Set(finalData.filter(p => p.make === selectedMake).map(p => p.model))].sort();
+    models.forEach(model => {
+        modelSel.appendChild(new Option(model, model));
+    });
+}
+
+function populateYears() {
+    yearSel.innerHTML = '<option value="">Select Year</option>';
+    const make = makeSel.value;
+    const model = modelSel.value;
+    if (!make || !model) return;
+    const years = [...new Set(finalData.filter(p => p.make === make && p.model === model).map(p => p.year))].sort();
+    years.forEach(year => {
+        yearSel.appendChild(new Option(year, year));
+    });
+}
+
+function renderProducts() {
+    const make = makeSel.value;
+    const model = modelSel.value;
+    const year = yearSel.value;
+    let filtered = finalData;
+    if (make) filtered = filtered.filter(p => p.make === make);
+    if (model) filtered = filtered.filter(p => p.model === model);
+    if (year) filtered = filtered.filter(p => p.year === year);
+    productGrid.innerHTML = "";
+    if (filtered.length === 0) {
+        productGrid.innerHTML = `<div class="no-results"><i class="fas fa-search"></i><p>No coilover kit found</p><p>Contact IDSPORTS for custom solution.</p></div>`;
+        return;
+    }
+    filtered.forEach(prod => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+            <div class="product-img-container">
+                <img class="product-img" src="${prod.part}.jpg" alt="${prod.application}" loading="lazy" onerror="this.src='sportproduct1.png'">
+                <div class="product-badge">SPORT</div>
+            </div>
+            <div class="product-info">
+                <div class="product-title">${prod.application.substring(0, 80)}</div>
+                <div class="product-desc">${prod.make} • ${prod.model} • ${prod.year}</div>
+                <div class="product-part">Part No: ${prod.part}</div>
+            </div>`;
+        productGrid.appendChild(card);
+    });
+}
+
+makeSel.addEventListener("change", () => { populateModels(); renderProducts(); });
+modelSel.addEventListener("change", () => { populateYears(); renderProducts(); });
+yearSel.addEventListener("change", renderProducts);
+searchBtn.addEventListener("click", renderProducts);
+
+window.addEventListener("load", () => {
+    populateMakes();
+    renderProducts();
+});
 </script>
 
 </body>
