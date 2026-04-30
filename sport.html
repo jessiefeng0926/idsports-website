@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPORT SERIES | IDSPORTS</title>
-    <link href="https://fonts.googleapis.cn/css2?family=Inter:wght@400;500;600;700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.cn/css2?family=Inter:wght@400;500;600,700,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
         * {
@@ -227,7 +227,6 @@
             left: 0;
         }
 
-        /* 数据库筛选样式（和 product.html 完全一样） */
         .filter-container {
             background: #0F0F0F;
             border-radius: 20px;
@@ -288,7 +287,6 @@
             transform: scale(0.97);
         }
 
-        /* 产品卡片（和 product.html 完全统一） */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -301,6 +299,8 @@
             transition: all 0.3s ease;
             overflow: hidden;
             height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         .product-card:hover {
             transform: translateY(-5px);
@@ -314,6 +314,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
         .product-img {
             width: 100%;
@@ -333,9 +334,9 @@
         }
         .product-info {
             padding: 20px;
-            height: calc(100% - 225px);
             display: flex;
             flex-direction: column;
+            flex: 1;
         }
         .product-title {
             font-weight: 700;
@@ -344,11 +345,17 @@
             color: #fff;
             line-height: 1.4;
             flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .product-desc {
             font-size: 12px;
             color: #aaa;
             margin-bottom: 10px;
+            flex-shrink: 0;
         }
         .product-part {
             font-family: Arial;
@@ -359,6 +366,8 @@
             font-size: 11px;
             color: #FF9A44;
             align-self: flex-start;
+            margin-top: auto;
+            flex-shrink: 0;
         }
         .no-results {
             text-align: center;
@@ -375,11 +384,10 @@
             font-size: 24px;
         }
 
-        /* 按钮独立成行，不堆叠 */
         .button-container {
             width: 100%;
             text-align: right;
-            margin: 40px 0;
+            margin: 30px 0;
         }
         .custom-btn {
             display: inline-block;
@@ -504,7 +512,7 @@
     <ul class="nav-menu">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">ABOUT US</a></li>
-        <li><a href="product.html">Products</a></li>
+        <li><a href="index.html#products">Products</a></li>
         <li><a href="index.html#technology">Technology</a></li>
         <li><a href="index.html#factory">Factory</a></li>
         <li><a href="index.html#contact">Contact</a></li>
@@ -590,7 +598,6 @@
         </div>
     </div>
 
-    <!-- 筛选栏（和 product.html 完全一样） -->
     <div class="filter-container">
         <div class="filter-row">
             <div class="filter-item">
@@ -615,10 +622,10 @@
         </div>
     </div>
 
-    <!-- 产品卡片列表（数据库布局） -->
-    <div class="product-grid" id="productList"></div>
+    <div style="display:block;width:100%;">
+        <div class="product-grid" id="productList"></div>
+    </div>
 
-    <!-- 按钮独立成行 -->
     <div class="button-container">
         <a href="#" class="custom-btn">----- please contact for more applications</a>
     </div>
@@ -658,13 +665,11 @@
 </footer>
 
 <script>
-// 导航收缩
 window.addEventListener('scroll', function() {
     const nav = document.getElementById('mainNavbar');
     nav.classList.toggle('shrink', window.scrollY > 50);
 });
 
-// 车型数据库
 const rawData = [
 { brand:"ALFA ROMEO", part:"SD148", app:"Alfa Romeo Giulia RWD 17-23" },
 { brand:"ALFA ROMEO", part:"SD203", app:"Alfa Romeo Stelvio RWD(GU) 18-20" },
@@ -688,9 +693,9 @@ const rawData = [
 { brand:"FORD", part:"SD294", app:"Ford Mustang 79-93" },
 { brand:"GEELY", part:"SD175", app:"LINK&CO 03，03+, BYD F3" },
 { brand:"GM", part:"SD126", app:"Cadillac ATS 13-19, CTS 14-19, CT4 20-21" },
-{ brand:"HONDA", part:"SD006", app:"Honda Civic 92-95 96-00 EK EG, Acura Integra 94-01 (Rear Fork),GEN V.VI" },
-{ brand:"HONDA", part:"SD007", app:"Honda ED EF 88-91 Civic, CRX 88-92, DA Integra(90-93) GEN IV" },
-{ brand:"HONDA", part:"SD020", app:"Honda S2000 AP1 AP2 00-09" },
+{ brand:"HONDA", part:"SD006", app:"Honda Civic 92-95 96-00 EK EG, Acura Integra 94-01 (Rear Fork),GEN V.VI" },
+{ brand:"HONDA", part:"SD007", app:"Honda ED EF 88-91 Civic, CRX 88-92, DA Integra(90-93) GEN IV" },
+{ brand:"HONDA", part:"SD020", app:"Honda S2000 AP1 AP2 00-09" },
 { brand:"HONDA", part:"SD033", app:"Honda Accord 02-07(7th) Accord Euro R CL7/CL9/ 04-08 Acura TSX/ Acura TL" },
 { brand:"HONDA", part:"SD053", app:"Honda Acura Integra RSX 02-06 Honda DC5, 02-05 civic si,GEN VII" },
 { brand:"HONDA", part:"SD110", app:"Honda Fit/Jazz GD3 GE8 GK5" },
@@ -703,9 +708,9 @@ const rawData = [
 { brand:"LEXUS", part:"SD069", app:"Lexus IS250/GS250(05-13, GSE20),IS350/GS350(05-13,GSE21),GS430(05-11,UZS190,UZRS190),GS460(07-11 URS190)" },
 { brand:"LEXUS", part:"SD142", app:"Lexus GS350, 400，430，450 13-up" },
 { brand:"LEXUS", part:"SD170", app:"Lexus LS430 00-06 UCF 30/31 UCF40" },
-{ brand:"MAZDA", part:"SD018", app:"Mazda RX-7 FC3S 86-91 GEN II" },
+{ brand:"MAZDA", part:"SD018", app:"Mazda RX-7 FC3S 86-91 GEN II" },
 { brand:"MAZDA", part:"SD021", app:"Mazda RX7 91-02 FD3S" },
-{ brand:"MAZDA", part:"SD023", app:"Mazda Miata MX5 NA NB 90-98" },
+{ brand:"MAZDA", part:"SD023", app:"Mazda Miata MX5 NA NB 90-98" },
 { brand:"MAZDA", part:"SD127", app:"Mazda Axela 13+ BM/BN (13-19）,CX-5(13-16, AWD/FWD),Volver sv40, v40" },
 { brand:"MAZDA", part:"SD150", app:"Mazda RX-8, 04-11" },
 { brand:"MAZDA", part:"SD205", app:"Mazda Miata MX5 06-15 NC" },
@@ -716,14 +721,14 @@ const rawData = [
 { brand:"MINI", part:"SD214", app:"Mini Cooper  F55 F56 F57 14-24" },
 { brand:"MITSUBISHI", part:"SD003", app:"Mitsubishi Lancer 02-06 Lancer 7/8/9" },
 { brand:"MITSUBISHI", part:"SD028", app:"Mitsubishi Lancer Evolution EVO VIII IX EVO8 EVO9 03-07" },
-{ brand:"MITSUBISHI", part:"SD037", app:"Mitsubishi Lancer EVO1/2/3 94-95" },
-{ brand:"MITSUBISHI", part:"SD038", app:"Mitsubishi Lancer EVO4/5/6 96-01" },
+{ brand:"MITSUBISHI", part:"SD037", app:"Mitsubishi Lancer EVO1/2/3 94-95" },
+{ brand:"MITSUBISHI", part:"SD038", app:"Mitsubishi Lancer EVO4/5/6 96-01" },
 { brand:"MITSUBISHI", part:"SD137", app:"Mitsubishi Galant VR4 EC5A" },
 { brand:"NISSAN", part:"SD013", app:"Nissan 240sx S13 89-94/  A31,A32,A33.   Nissan laurel c33/c34" },
 { brand:"NISSAN", part:"SD015", app:"Nissan 240sx S14 95-98 R32,R33, RWD, Nissan laurel E-GC35 chassis,S15:99-02" },
 { brand:"NISSAN", part:"SD016", app:"Nissan Skyline R32 BNR32  HR32 GT-S GT-ST RB20DET 89-94" },
 { brand:"NISSAN", part:"SD017", app:"Nissan Skyline GT-S/GT-ST R33 (HR33/ER33/ECR33) 94-98" },
-{ brand:"NISSAN", part:"SD030", app:"Nissan 300ZX Z32 90-96 Skyline R32 GTR" },
+{ brand:"NISSAN", part:"SD030", app:"Nissan 300ZX Z32 90-96 Skyline R32 GTR" },
 { brand:"NISSAN", part:"SD128", app:"Nissan GTR R35" },
 { brand:"NISSAN", part:"SD190", app:"Infiniti Q50 AWD 44mm W/O DDS 14-20" },
 { brand:"NISSAN", part:"SD211", app:"Infinity Q70( 14-UP ) AWD, Y51" },
@@ -734,7 +739,7 @@ const rawData = [
 { brand:"SUBARU", part:"SD099", app:"Subaru Legacy 09-13 BM9/BR9" },
 { brand:"SUBARU", part:"SD119", app:"Subaru Impreza WRX STi 08-14" },
 { brand:"SUZUKI", part:"SD031", app:"Swift 04-15,ZC11S ZC21S ZD21S ZC71S ZC31S ZC32S ,ZC33 ZC72 ZC72S  82" },
-{ brand:"TOYOTA", part:"SD019", app:"Toyota Supra MA70 GA70 JZA70 87-92" },
+{ brand:"TOYOTA", part:"SD019", app:"Toyota Supra MA70 GA70 JZA70 87-92" },
 { brand:"TOYOTA", part:"SD069", app:"Toyota Altezza GITA GXE10W, Crown GRS202, Athlete ARS210/214/AWS210/GRS210/204/200/184/182/180/,Majesta GWS214, REIZ GRX133/130/121/120" },
 { brand:"TOYOTA", part:"SD085", app:"Toyota Matrix 03-18" },
 { brand:"TOYOTA", part:"SD108", app:"Toyota supra 93-02, Lexus SC300 SC400 92-00, JZA80" },
@@ -750,7 +755,6 @@ const rawData = [
 { brand:"XIAOPENG", part:"SD289", app:"Xiaopeng P7" }
 ];
 
-// 工具函数
 function extractYearRange(desc) {
     const yearMatch = desc.match(/(\d{2,4})\s*[-–]\s*(\d{2,4})/);
     if (yearMatch) return `${yearMatch[1]}-${yearMatch[2]}`;
@@ -863,6 +867,5 @@ window.addEventListener("load", () => {
     renderProducts();
 });
 </script>
-
 </body>
 </html>
